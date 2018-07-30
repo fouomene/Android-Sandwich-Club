@@ -16,27 +16,25 @@ import org.json.JSONException;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class DetailActivity extends AppCompatActivity {
 
     public static final String EXTRA_POSITION = "extra_position";
     private static final int DEFAULT_POSITION = -1;
 
-    private TextView originTv;
-    private TextView  alsoKnownTv;
-    private TextView ingredientsTv;
-    private TextView descriptionTv;
-
+    @BindView(R.id.origin_tv) TextView originTv;
+    @BindView(R.id.also_known_tv) TextView  alsoKnownTv;
+    @BindView(R.id.ingredients_tv) TextView ingredientsTv;
+    @BindView(R.id.description_tv) TextView descriptionTv;
+    @BindView(R.id.image_iv) ImageView ingredientsIv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        ImageView ingredientsIv = findViewById(R.id.image_iv);
-
-        originTv = findViewById(R.id.origin_tv);
-        alsoKnownTv = findViewById(R.id.also_known_tv);
-        ingredientsTv = findViewById(R.id.ingredients_tv);
-        descriptionTv = findViewById(R.id.description_tv);
+        ButterKnife.bind(this);
 
         Intent intent = getIntent();
         if (intent == null) {
@@ -68,6 +66,8 @@ public class DetailActivity extends AppCompatActivity {
         populateUI(sandwich);
         Picasso.with(this)
                 .load(sandwich.getImage())
+                .placeholder(R.mipmap.ic_launcher)
+                .error(R.mipmap.ic_launcher)
                 .into(ingredientsIv);
 
         setTitle(sandwich.getMainName());
